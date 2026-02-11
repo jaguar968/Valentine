@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Journey</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        body {
+            background-image: url(jamie-street-Lw9STRb-D6o-unsplash.jpg);
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Georgia', serif;
+            color: #4a4a4a;
+        }
+        #card-container {
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            padding: 30px;
+            background: white;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        /* The Polaroid Effect */
+        #photo-frame {
+            width: 100%;
+            height: 300px;
+            background-color: #eee;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 8px solid #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        #photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* This keeps photos from looking stretched */
+        }
+        .fade-in { animation: fadeIn 0.8s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        button {
+            background: #d4a373;
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            margin-top: 20px;
+            cursor: pointer;
+            border-radius: 25px;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+        button:hover { background: #bc8a5f; transform: scale(1.05); }
+        h1 { font-size: 1.3rem; line-height: 1.5; margin: 10px 0; }
+    </style>
+</head>
+<body>
+
+<div id="card-container">
+    <div id="photo-frame">
+        <img id="display-photo" src="IMG-20260115-WA0009.jpg" class="fade-in">
+    </div>
+    <div id="content">
+        <h1 class="fade-in" id="text">I've spent a lot of time thinking about us, and the journey that brought us back together...</h1>
+        <button id="next-btn" onclick="nextStep()">Next</button>
+    </div>
+</div>
+
+<script>
+    let step = 0;
+
+    // UPDATE THESE: Add your photo filenames and your custom messages here
+    const slides = [
+        { img: "photo1b.jpeg", text: "I've learned that some things are worth the wait, and some people are worth the growth." },
+        { img: "IMG-20260115-WA0015.jpg", text: "You've shown me what it means to truly forgive and start a new chapter." },
+        { img: "IMG-20260115-WA0028.jpg", text: "Reason #1: Your resilience. You are the strongest person I know." },
+        { img: "smile.jpg", text: "Reason #2: Your laugh—it's the sound I missed the most." },
+        { img: "IMG-20260115-WA0004.jpg", text: "Reason #3: The way you make 'us' feel like home, no matter where we are." },
+        { img: "IMG-20260115-WA0049.jpg", text: "I promise to cherish this second chance every single day." },
+        { img: "try3.jpg", text: "So, I have one very important question..." }
+    ];
+
+    function nextStep() {
+        const textElement = document.getElementById('text');
+        const imgElement = document.getElementById('display-photo');
+        const contentDiv = document.getElementById('content');
+        
+        if (step < slides.length) {
+            // Remove animation classes to restart them
+            textElement.classList.remove('fade-in');
+            imgElement.classList.remove('fade-in');
+            void textElement.offsetWidth; 
+            
+            // Update content
+            textElement.innerText = slides[step].text;
+            imgElement.src = slides[step].img;
+            
+            // Re-add animation
+            textElement.classList.add('fade-in');
+            imgElement.classList.add('fade-in');
+            
+            step++;
+        } else {
+            // The Finale
+            imgElement.src = "jamie-street-Lw9STRb-D6o-unsplash.jpg"; // Your final romantic photo
+            contentDiv.innerHTML = `
+                <h1 class="fade-in">Will you be my Valentine?</h1>
+                <button onclick="celebrate()">YES!</button>
+            `;
+        }
+    }
+
+    function celebrate() {
+        confetti({
+            particleCount: 150,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ['#d4a373', '#faedcd', '#ccd5ae']
+        });
+        document.getElementById('content').innerHTML = "<h1 class='fade-in'>❤️ I'll see you on the 14th! ❤️</h1>";
+    }
+</script>
+
+</body>
+</html>
